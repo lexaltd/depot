@@ -1,10 +1,20 @@
 Rails.application.routes.draw do
+  get 'store/index'
+
   resources :products
-  # The priority is based upon order of creation: first created -> highest priority.
+  # The priority is based upon order of creation:
+  # (Приоритет основан на порядке создания:) 
+  #first created -> highest priority.
+  # (создан первым -> наивысший приоритет.)
   # See how all your routes lay out with "rake routes".
+  # (Раскладку всех маршрутов можно увидеть с помощью команды "rake routes".)
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
+
+  # (Корневой маршрут к вашему сайту можно получить с помощью "root")
+  root to: 'store#index', as: 'store' #добавлено as: 'store'. Последнее добавление заставит Rails создать метод доступа store_path
+  #get '/'=>'store#index' # Тоже самое что вверху
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

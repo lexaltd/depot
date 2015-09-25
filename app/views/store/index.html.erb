@@ -1,0 +1,22 @@
+<% if notice %>
+	<p id="notice"><%= notice %></p>
+<% end %>
+
+<h1>Your Pragmatic Catalog</h1>
+
+<% @products.each do |product| %>
+	<div class="entry">
+		<%= image_tag(product.image_url) %>
+		<!--Он генерирует HTML-тег <img>-->
+
+		<h3><%= product.title %></h3>
+
+		<%= sanitize(product.description) %>
+		<!--sanitize() Он позволяет безопасно добавлять стилевое оформление HTML-->
+		<!--Следует заметить,данное решение открывает потенциальную дыру безопасности-->
+
+		<div class="price_line">
+			<span class="price"><%= product.price %></span>
+		</div>
+	</div>
+<% end %>
