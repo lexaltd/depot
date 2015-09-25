@@ -6,4 +6,9 @@ class Product < ActiveRecord::Base
             with: %r{\.(gif|jpg|png)\Z}i,
             message: 'URL должен указывать на изображение формата GIF, JPG или PNG.'
           } # проверим, что URL-адрес заканчивается одним из расширений: .gif, .jpg или .png.
+  validates :title, length: {minimum: 10}
+  
+  def self.latest
+    Product.order(:updated_at).last # возвращающий товар, который подвергся изменениям последним.
+  end        
 end
