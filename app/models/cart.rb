@@ -13,5 +13,14 @@ class Cart < ActiveRecord::Base
     end
     
     current_item
-  end   
+  end 
+
+  def total_price
+    line_items.to_a.sum { |item| item.total_price }
+    # line_items.to_a.sum  do |item|
+    #   item.total_price 
+    # end
+
+    #line_items.to_a.sum(&:total_price)
+  end  
 end

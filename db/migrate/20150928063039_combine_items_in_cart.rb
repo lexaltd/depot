@@ -1,5 +1,5 @@
 class CombineItemsInCart < ActiveRecord::Migration
-  def up
+  def up #(Сделано для применений миграций) Для rake db:migrate(Для того чтоб в таблице line_items все записи стали такими как мы хотим)
     # замена нескольких записей для одного и того же товара в корзине одной записью
     Cart.all.each do |cart|
       # Для каждой корзины - подсчет количества каждого товара в корзине
@@ -18,7 +18,7 @@ class CombineItemsInCart < ActiveRecord::Migration
     end
   end
 
-  def down
+  def down #(Сделано для оката миграций) Для rake db:rollback
     # разбиение записей с quantity>1 на несколько записей
     LineItem.where("quantity>1").each do |line_item|
       # add individual items

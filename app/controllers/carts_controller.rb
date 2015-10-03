@@ -1,5 +1,8 @@
 class CartsController < ApplicationController
   before_action :set_cart, only: [:show, :edit, :update, :destroy]
+  # Оператор rescue_from перехватывает исключение
+  # rescue_from - для перехвата всех ошибок ActiveRecord::RecordNotFound и что-то с ними делать(with: :invalid_cart).
+  rescue_from ActiveRecord::RecordNotFound, with: :invalid_cart 
 
   # GET /carts
   # GET /carts.json
@@ -10,6 +13,7 @@ class CartsController < ApplicationController
   # GET /carts/1
   # GET /carts/1.json
   def show
+   
   end
 
   # GET /carts/new
@@ -54,9 +58,13 @@ class CartsController < ApplicationController
   # DELETE /carts/1
   # DELETE /carts/1.json
   def destroy
-    @cart.destroy
+    #@cart.destroy
+    @cart.destroy if @cart.id == session[:cart_id]
+    session[:cart_id] = nil
+
     respond_to do |format|
-      format.html { redirect_to carts_url, notice: 'Cart was successfully destroyed.' }
+      format.html { redirect_to store_url, notice: 'Теперь ваша корзина пуста!' }
+      # format.html { redirect_to carts_url, notice: 'Cart was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -70,5 +78,14 @@ class CartsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def cart_params
       params[:cart]
+    end
+
+    def invalid_cart
+      # Свойство  logger есть у каждого контроллера. 
+      # В данном случае мы используем его для записи сообщения в регистрационный уровень error.
+      # мы зарегистрируем этот факт во внутреннем журнале регистрации
+      logger.error "Attempt to access invalid cart #{params[:id]}" 
+      #logger.error "Попытка доступа к несуществующей корзине #{params[:id]}" 
+      redirect_to store_url, notice: 'Invalid cart'
     end
 end
