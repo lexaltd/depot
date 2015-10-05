@@ -43,6 +43,14 @@ class LineItemsController < ApplicationController
         #format.html { redirect_to @line_item.cart, notice: 'Line item was successfully created.' }
         #format.html { redirect_to @line_item.cart }
         format.html { redirect_to store_url }
+        format.js { @current_item = @line_item }#чтобы отправить AJAX-запрос
+        #Сначала мы не дадим действию create осуществить перенаправление на отображение главной страницы, 
+        # если запрос предназначается для JavaScript. 
+        # Мы сделаем это путем добавления вызова метода respond_to() format.js, 
+        # в котором ему сообщается, что нам нужно получить ответ в формате .js.
+        # и вызовет этот файл /app/views/line_items/create.js.erb
+
+
         format.json { render :show, status: :created, location: @line_item }
       else
         format.html { render :new }
