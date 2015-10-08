@@ -1,6 +1,6 @@
 class LineItemsController < ApplicationController
   include CurrentCart
-  before_action :set_cart, only: [:create] # вызвать (set_cart) этот метод перед create 
+  before_action :set_cart, only: [:create, :destroy] # вызвать (set_cart) этот метод перед create 
 
   before_action :set_line_item, only: [:show, :edit, :update, :destroy] # вызвать (set_line_item) этот метод только перед [:show, :edit, :update, :destroy]
 
@@ -75,11 +75,22 @@ class LineItemsController < ApplicationController
 
   # DELETE /line_items/1
   # DELETE /line_items/1.json
-  def destroy
-    @line_item.destroy
+  def destroy   
+    #@line_item = @cart.remove_product(params[:id])
+    @line_item.quantity -= 1
+    #return render plain: @cart.line_items.length
+    @line_item.quantity < 1 ? (@line_item.destroy) : (@line_item.save)
+    # if @line_item.quantity < 1
+    #   @line_item.destroy
+    # else
+    #   @line_item.save
+    # end 
     respond_to do |format|
       #format.html { redirect_to line_items_url, notice: 'Line item was successfully destroyed.' }
-      format.html { redirect_to @line_item.cart, notice: 'Line item was successfully destroyed.' }
+      #format.html { redirect_to @line_item.cart, notice: 'Line item was successfully destroyed.' }
+      format.html { redirect_to store_url }
+      format.js { @current_item = @line_item }#чтобы отправить AJAX-запрос
+      #format.js {  @current_item = @line_item, render( :json => ["OK"] ) }
       format.json { head :no_content }
     end
   end

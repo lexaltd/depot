@@ -66,6 +66,7 @@ class CartsController < ApplicationController
       format.html { redirect_to store_url }
       #format.html { redirect_to store_url, notice: 'Теперь ваша корзина пуста!' }
       # format.html { redirect_to carts_url, notice: 'Cart was successfully destroyed.' }
+      format.js #чтобы отправить AJAX-запрос
       format.json { head :no_content }
     end
   end
