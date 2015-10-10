@@ -1,5 +1,7 @@
 class Product < ActiveRecord::Base
   has_many :line_items # имеет много line_items
+  # соединения многие-ко-многим с другой моделью, через третью модель
+  has_many :orders, through: :line_items # имеет много orders, через line_items
   before_destroy :ensure_not_referenced_by_any_line_item #метод будет вызван перед тем, как Rails попытается удалить строку в базе данных
 
   validates :title, :description, :image_url, presence: true # проверки наличия какого-нибудь содержимого во всех текстовых полях перед записью строки в базу данных

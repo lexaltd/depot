@@ -1,8 +1,14 @@
 Rails.application.routes.draw do
+  resources :orders
   resources :line_items
   resources :carts
   get 'store/index'
-  resources :products
+  #resources :products
+  resources :products do
+    get :who_bought, on: :member
+    # если один маршрут к элементу, также можно передать :on (on: :member) к маршруту, избавившись от блока:
+    # http://rusrails.ru/rails-routing
+  end
   # The priority is based upon order of creation:
   # (Приоритет основан на порядке создания:) 
   #first created -> highest priority.
