@@ -39,6 +39,7 @@ class OrdersController < ApplicationController
       if @order.save
         Cart.destroy(session[:cart_id]) # удалив корзину.
         session[:cart_id] = nil # удалив корзину из сессии.
+        OrderNotifier.received(@order).deliver # отправка email
         format.html { redirect_to store_url, notice: 'Thank you for your order.' }
         format.json { render :show, status: :created, location: @order }
       else
