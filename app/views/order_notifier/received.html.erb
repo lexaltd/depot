@@ -1,5 +1,28 @@
-<h1>OrderNotifier#received</h1>
-
+<h3>Уважаемый(ая) <%= @order.name %></h3>
 <p>
-  <%= @order.line_items %>, find me in app/views/order_notifier/received.html.erb
+	Администрация магазина Pragmatic Store благодарит Вас за недавний заказ.
+</p>
+<p>
+	Вы заказали следующий товар:
+</p>
+<% total_price = 0 %>
+<table>
+	<tr>
+		<th colspan="2">Наименование</th><th>Цена</th>
+	</tr>
+<% @order.line_items.each do |line_item| %>	
+	<tr>
+		<td><%= line_item.quantity %>&times;</td>
+		<td><%= line_item.product.title %></td>
+		<td class="item_price"><%= number_to_currency(line_item.total_price) %>		
+        <% total_price += line_item.total_price %>
+	</tr>
+<% end %>
+	<tr class="total_line">
+		<td colspan="2">Total</td>
+        <td class="total_cell"><%= number_to_currency(total_price) %></td>
+	</tr>	
+</table>
+<p>
+	Когда Ваш заказ будет отправлен, мы пошлем Вам по электронной почте отдельное сообщение.
 </p>

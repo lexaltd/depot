@@ -1,0 +1,24 @@
+<h3>Уважаемый(ая) <%= @order.name %></h3>
+<p>
+	Администрация магазина Pragmatic Store благодарит Вас за недавний заказ.
+</p>
+<p>
+	Вы заказали следующий товар:
+</p>
+
+<table>
+	<tr>
+		<th colspan="2">Наименование</th><th>Цена</th>
+	</tr>
+<% @order.line_items.each do |line_item| %>	
+	<tr>
+		<td><%= line_item.quantity %>&times;</td>
+		<td><%= line_item.product.title %></td>
+		<td class="item_price"><%= number_to_currency(line_item.total_price) %>		
+
+	</tr>
+<% end %>	
+</table>
+<p>
+	Когда Ваш заказ будет отправлен, мы пошлем Вам по электронной почте отдельное сообщение.
+</p>
