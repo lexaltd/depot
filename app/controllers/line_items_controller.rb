@@ -3,6 +3,8 @@ class LineItemsController < ApplicationController
   before_action :set_cart, only: [:create, :destroy] # вызвать (set_cart) этот метод перед create 
 
   before_action :set_line_item, only: [:show, :edit, :update, :destroy] # вызвать (set_line_item) этот метод только перед [:show, :edit, :update, :destroy]
+  
+  skip_before_action :authorize, only: [:create, :destroy] #Вы можете не допустить запуск этого фильтра (authorize) перед определенными экшнами с помощью skip_before_action
 
   # GET /line_items
   # GET /line_items.json

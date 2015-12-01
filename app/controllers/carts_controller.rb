@@ -1,4 +1,5 @@
 class CartsController < ApplicationController
+  skip_before_action :authorize, only: [:create, :update, :destroy]#Вы можете не допустить запуск этого фильтра (authorize) перед определенными экшнами с помощью skip_before_action
   before_action :set_cart, only: [:show, :edit, :update, :destroy]
   # Оператор rescue_from перехватывает исключение
   # rescue_from - для перехвата всех ошибок ActiveRecord::RecordNotFound и что-то с ними делать(with: :invalid_cart).

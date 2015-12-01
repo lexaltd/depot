@@ -4,6 +4,8 @@ class OrdersController < ApplicationController
 
   before_action :set_order, only: [:show, :edit, :update, :destroy]
 
+  skip_before_action :authorize, only: [:new, :create]#Вы можете не допустить запуск этого фильтра (authorize) перед определенными экшнами с помощью skip_before_action
+
   # GET /orders
   # GET /orders.json
   def index
