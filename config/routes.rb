@@ -10,9 +10,7 @@ Rails.application.routes.draw do
   get 'sessions/destroy'
 
   resources :users
-  resources :orders
-  resources :line_items
-  resources :carts
+
   get 'store/index'
   #resources :products
   resources :products do
@@ -20,6 +18,15 @@ Rails.application.routes.draw do
     # если один маршрут к элементу, также можно передать :on (on: :member) к маршруту, избавившись от блока:
     # http://rusrails.ru/rails-routing
   end
+
+  scope '(:locale)' do#Кроме того, обозначение :locale взято в круглые скобки, что является способом сообщить о его необязательном характере. 
+    resources :orders
+    resources :line_items
+    resources :carts
+    root 'store#index', as: 'store', via: :all #добавлено as: 'store'. Последнее добавление заставит Rails создать метод доступа store_path
+    # via: :all - если вы хотите позволить своему приложению обрабатывать все методы так, как оно считает нужным.
+  end
+
   # The priority is based upon order of creation:
   # (Приоритет основан на порядке создания:) 
   #first created -> highest priority.
@@ -31,7 +38,7 @@ Rails.application.routes.draw do
   # root 'welcome#index'
 
   # (Корневой маршрут к вашему сайту можно получить с помощью "root")
-  root to: 'store#index', as: 'store' #добавлено as: 'store'. Последнее добавление заставит Rails создать метод доступа store_path
+  #root to: 'store#index', as: 'store' #добавлено as: 'store'. Последнее добавление заставит Rails создать метод доступа store_path
   #get '/'=>'store#index' # Тоже самое что вверху
 
   # Example of regular route:
