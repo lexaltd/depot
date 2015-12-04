@@ -7,7 +7,8 @@ class StoreController < ApplicationController
     if params[:set_locale]
       redirect_to store_url(locale: params[:set_locale])
     else
-      @products = Product.order(:title) # order - сортирует, отобразим их в алфавитном порядке.
+      #@products = Product.order(:title) # order - сортирует, отобразим их в алфавитном порядке.
+      @products = Product.where(locale: I18n.locale).order(:title)
     end
   end
 end
