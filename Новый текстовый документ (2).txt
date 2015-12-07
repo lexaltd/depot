@@ -1,4 +1,4 @@
-/app/views/layouts/application.html.erb
+/app/views/layouts/application.html.erb 
 
 <div id="cart">
  <%= render @cart %>
